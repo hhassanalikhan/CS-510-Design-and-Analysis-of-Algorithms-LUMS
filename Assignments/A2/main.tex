@@ -1,0 +1,506 @@
+\documentclass{article}
+\usepackage{graphicx,fancyhdr,amsmath,amssymb,amsthm,subfig,url,hyperref}
+\usepackage{amssymb,setspace,graphicx,float,listings,amsfonts}
+\usepackage{algorithm}
+\usepackage[T1]{fontenc}
+\usepackage{enumerate}
+\usepackage{lmodern}
+\usepackage[noend]{algpseudocode}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\usepackage{enumerate}
+\theoremstyle{definition}
+\newtheorem{Q}{Problem}
+\newcommand{\code}[2]{\begin{algorithm}[H]\caption{: #1}\begin{algorithmic}#2\end{algorithmic}\end{algorithm}}
+%----------------------- Student and Homework Information --------------------------
+
+%%% PLEASE FILL THIS OUT WITH YOUR INFORMATION
+\newcommand{\myname}{Hassan Ali Khan}
+\newcommand{\myid}{15030044}
+\newcommand{\hwNo}{Problem Set 2}
+%%% END
+
+
+%--------------------- This is the title of the document. DO NOT CHANGE IT -----------------------
+
+
+
+\fancypagestyle{plain}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\sffamily\bfseries\large LUMS}
+\fancyhead[LO,RE]{\sffamily\bfseries\large CS-510 Design and Analysis of Algorithms}
+\fancyfoot[LO,RE]{\sffamily\bfseries\large \myname: \myid @lums.edu.pk}
+\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+%--------------------- This is the title of the document. DO NOT CHANGE IT ------------------------
+
+\title{CS-510 \hwNo}
+\author{\myname \qquad Student ID: \myid}
+
+%--------------------------------- AFTER Entering the Student and Homework Information, write your answers below  ----------------------------------
+
+\begin{document}
+\maketitle
+\begin{tabbing}
+
+
+{\bf CS-510 Algorithms}   \= \hskip1.4in \= Problem Set 2 \` {\bf Spring 2017} \kill 
+\end{tabbing}
+\begin{Q}
+Suppose you are given an array $A[1...n]$ of sorted integers that has been circularly shifted $k$ positions to the right. For example, $[35,42,5,15,27,29]$ is a sorted array that has been shifted $k = 2$ positions. We can obviously find the largest element in $O(n)$ time. Describe an $O(\log n)$ time algorithm to find the maximum in $A$. 
+\end{Q}
+
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{FindMax}{$A,i1,i2$}\Comment{Find the max in sorted and shifted array A[1..n],i1 =1,i2=n}
+
+  \If{$A[i1] > A[i2]$}
+  \State return $A[i1]$
+  \Else
+    \State 
+    \If{$A[i2/2] < A[i2]$}
+        \State FindMax($A,i1,i2/2$)
+     \Else
+        \State FindMax($A,i2/2,i2$)
+    \EndIf
+    
+    \EndIf
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+	\pagebreak
+\begin{Q}
+Given a sorted array of distinct integers $A[1...n]$, you want to find out whether there is an index $i$ for which $A[i] = i$. Give a divide and conquer algorithm that runs in $O(\log n)$ time to find out an index $i$ if it exists.
+\end{Q}
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{FindInd}{$A,start,end$}\Comment{Find the max in sorted and shifted array A[1..n],mid=n/2}
+
+  \State $mid =  (start+end)/2$
+  \If{$start$ = $mid$}
+  \State
+      \If{$start$ = $mid$}
+        \State return $mid$
+      \Else
+       \State return $-1$
+       \EndIf
+  \Else
+     \If{$A[mid]$ < $mid$}
+        \State FindInd($A,mid,end$)
+     \Else
+        \State FindInd($A,start,mid$)
+    \EndIf
+    \EndIf
+    
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+
+\begin{Q}
+Suppose you are choosing between the following 3 algorithms:
+\begin{itemize}
+\item Algorithm A solves the problem of size $n$ by dividing it into 5 subproblems of size $n/2$, recursively solving each subproblem, and then combining the solutions in linear time.
+\item Algorithm B solves the problem of size $n$ by recursively solving two subproblems of size $n-1$ and then combining the solutions in constant time
+\item Algorithm C solves the problem of size $n$ by dividing it into nine subproblems of size $n/3$, recursively solving each subproblem, and then combining the solutions in $O(n^2)$ time.
+\end{itemize}
+What are the running times of each algorithm and which would you choose and why?
+\end{Q}
+\pagebreak
+\begin{Q}
+You are given an array of $n$ elements, and you notice that some of the elements are duplicates; that is, they appear more than once in the array. Show how to remove all duplicates from the array in $O(n \log n)$ time.
+
+
+
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\State $repCount$ = 0
+\Procedure{RemoveDuplicate}{$A,low,high$}\Comment{Find the max in sorted and shifted array A[1..n],mid=n/2}
+
+
+  \If{$low$ < $high$}
+    \State $mid$ =  ($low$ + $high$)/2
+    \State RemoveDuplicate($A,mid+1,high$)
+    \State FindInd($A,low,mid$)
+    \State Merge($A,low,mid,high$)
+    \Else
+        \State Return
+    \EndIf
+
+    
+
+
+\EndProcedure
+\linebreak
+\Procedure{Merge}{$A,low,mid,high$}
+
+
+  \For{$(l1=low,l2=mid+1,i=low;l1<=mid,l2<high;i++)$}
+      \State \If{$A[l1]<A[l2]$}
+            \State
+                $b[i]=A[l1++]$
+                \EndIf
+           \If{$A[l1]>A[l2]$}
+            \State
+                $b[i]=A[l2++]$
+                \EndIf
+                
+      \EndFor
+\State $tempInd=0$
+ \For{$(i=low;l1<=high;i++)$}
+  \If{$A[i+1]$ = $A[i]$}
+  \State $repCount++;$
+   \State $A[A.length-repCount] = b[i]$
+    \Else
+        \State $A[tempInd++] = b[i]$
+       \EndIf
+    \EndFor
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\end{Q}
+\pagebreak
+\begin{Q}
+Assume you have an array $A[1..n]$ of $n$ elements. A majority element of $A$ is any element occurring in more than $n/2$ positions (so if $n = 6$ or $n = 7$, any majority element will occur in at least $4$ positions). Assume that elements cannot be ordered or sorted, but can be compared for equality. (You might think of the elements as chips, and there is a tester that can be used to determine whether or not two chips are identical.) Design an efficient divide and conquer algorithm to find a majority element in $A$ (or determine that no majority element exists). Aim for an algorithm that does $O(n \log n)$ equality comparisons between the elements. A more difficult $O(n)$ algorithm is possible, but may be difficult to find. 
+\end{Q}
+
+
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{FindMajor}{$A$}
+
+  \State $B[Max(A)] =  {0}$
+   \For{$(i=1;l1<=n;i++)$}
+    \State{$B[A[i]++$}
+    \EndFor
+    
+  \State $MAX = 0,MAXind=-1$
+  \For{$(i=1;l1<=n;i++)$}
+  \If{$B[i]>MAX$}
+    \State{$MAX=B[i]$}
+    \State{$MAXind=i$}
+   
+    \EndIf
+    
+    \EndFor
+    \State return $MAXind$;
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+
+
+\begin{Q}
+Given the following recurrence relations, find the running time (in big-O notation) using the recursion tree method, substitution method and the Master Theorem.
+\begin{itemize}
+\item $$T(n) = \begin{cases} 8T\left(\dfrac{n}{2}\right) + \Theta(n^2) & \text{ if } n\geq2 \\ 1 & \text{ else } \end{cases}$$
+\item $$T(n) = \begin{cases} 3T\left(\dfrac{n}{4}\right) + n\log n & \text{ if } n\geq 2 \\ 1 & \text{ else } \end{cases}$$
+\item $$T(n) = \begin{cases} 2T\left(\dfrac{n}{4}\right) + \sqrt{n} & \text{ if } n\geq 2 \\ 1 & \text{ else } \end{cases}$$
+\end{itemize}
+
+\end{Q}
+
+\begin{A}
+Answer:\\
+1-Substitution:\\
+     =  8 T(n/2) + n^2\\
+       =  8 (8T(n/4) + (n^2)/4) + n^2\\
+       = 8*log(n) +8(n^2)*log(n) +n^2\\\\
+2-Substitution:\\
+     =  3 T(n/4) + n*log(n)\\
+       =  3 (3T(n/8) + (n/2)*log(n/2) + n*log(n)\\
+       = (3*log(n))/2 + (3(n)*log(n))/2 + n*log(n)\\\\     
+       \end{A}
+       \pagebreak
+\begin{Q}
+Suppose you have an unsorted array $A$ of all integers in the range 0 to $n$ except for one integer, denoted the $missing$ $number$. Assume $n = 2^k -1$. Design a $O(n)$ Divide and Conquer algorithm to find the missing number. Argue (informally) that your algorithm is correct and analyze its running time and space requirements.
+\end{Q}
+
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{FindMissing}{$A[n-1]$}
+
+  \State $B[n] = {0}$
+   \For{$(i=1;i<=n-1;i++)$}
+    \State{$B[A[i]] = 1$}
+    \EndFor
+
+  \For{$(i=1;i<=n;i++)$}
+  \If{$B[i] == 0$}
+     \State return $B[i]$;
+  \EndIf
+    
+    \EndFor
+   
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}\\
+The run-time of above given algorithm is\\  = 1 + (4(n-1)) + 4(n) + 1\\
+= 8n - 2
+\pagebreak
+\begin{Q}
+Devise a Divide and Conquer procedure for computing the $k$th largest integer in an array of integers. Analyse the asymptotic time complexity of your algorithm. ($Hint$: Use the Partition procedure discussed in class)
+\end{Q}
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{FindKmax}{$A$,$n$,$k$}
+
+ \If{$n <= k$}
+    \State{$A =Sort(A);$}
+    \State{$return A[1];$}
+ \EndIf
+  \State $losers[n/2] =  {0};$
+  \State $winners[n/2] =  {0};$
+  \State $loserInd =  0;$
+  \State $winnerInd =  0;$
+   \For{$(i=1;l1<=n;i+=2)$}
+   \If{$A[i] > A[i+1]$}
+    \State{$losers[loserInd++] =  A[i+1];$}
+    \State{$winners[winnerInd++] =  A[i];$}
+   \EndIf
+    \If{$A[i] < A[i+1]$}
+    \State{$losers[loserInd++] =  A[i];$}
+    \State{$winners[winnerInd++] =  A[i+1];$}
+    \EndIf
+   \EndFor
+  \State{$FindKmax(winners,n/2,k);$}
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+The run-time of above given algorithm is\\  = K*log(k) + 8*log(n)\\
+\pagebreak
+\begin{Q}
+Given a binary string of type\{$1^m0^n$\}, devise an algorithm that finds the number of zeroes in $O(\log n)$ time.
+\end{Q}
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\State $l=1, h = n, An = n$
+\Procedure{BinarySearch}{$A$,$An$,$l$,,$h$}
+
+ \If{$A[(l+h)/2 == 1 && A[(l+h)/2 + 1== 0$}
+    \State{$return An - (l+h)/2 + 1$}
+ \EndIf
+ \If{$A[(l+h)/2 == 0 && A[(l+h)/2 + 1== 0$}
+    \State{$BinarySearch(A,An,l,(l+h)/2)$}
+ \EndIf
+ \If{$A[(l+h)/2 == 1 && A[(l+h)/2 + 1== 1$}
+    \State{$BinarySearch(A,An,(l+h)/2,h) $}
+ \EndIf
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\pagebreak
+\begin{Q}
+Flavius Josephus was a famous historian of the first century. During the Jewish-Roman war, he was captured along with 40 other jewish rebels by the Romans. The rebels preferred suicide to capture and so decided that they would form a circle and kill every third person in the circle until no one was left. Josephus and one of his friend didn't want suicide so Josephus quickly calculated where he and his friend should stand in the circle so that they would be the last one's left. 
+\begin{itemize}
+\item Calculate where Josephus and his friend would have stood.
+\item Come up with a more general solution where instead of 41, there are $n$ people in the circle.
+\end{itemize}
+\end{Q}
+\pagebreak
+\begin{Q}
+The Tower of Hanoi is a classic puzzle invented by the French Mathematician Edouard Lucas in 1883. In this puzzle there are 8 disks, initially stacked in decreasing order of size one of three pegs. We have to move all of the disks to another peg while following these two rules
+\begin{itemize}
+ \item Only one disk can be moved at a time
+ \item A larger disk can't be put on top of a smaller disk
+\end{itemize}
+Design an algorithm to solve this problem and analyze the running time of your algorithm. \\
+\textbf{Hint : }Think how you can solve the problem if there were only 2 disks instead of 8 and see if you can build from that.
+\end{Q}
+
+
+\begin{algorithm}
+\caption{}\label{}
+\begin{algorithmic}
+\Procedure{MoveTower}{$disk, source, dest, spare$}
+ \If{$disk == 0$}
+    \State{$move disk from source to dest$}
+ \EndIf
+ \If{$disk != 0$}
+    \State{$ MoveTower(disk - 1, source, spare, dest)$}
+  \State{$move disk from source to dest $}
+   \State{$ MoveTower(disk - 1, spare, dest, source)$}
+ \EndIf
+
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\pagebreak
+\begin{Q}
+\textbf{[K-way Merge]}  Suppose you have $k$ sorted arrays $A_1,A_2,...A_k$ each with $n$ elements. You want to combine them into a single sorted array of size $kn$. One way to do this would be to use the merge operation we discussed in class. First merge arrays $A_1,A_2$ then merge the result with $A_3$ and so on
+ \begin{itemize}
+  \item Figure out how many steps this algorithm would take.
+  \item Design a better algorithm for this problem.
+ \end{itemize}
+\end{Q}
+\begin{A}
+Answer: 
+\begin{itemize}
+\item  \text{$2n + 3n + 4n +...(k-1)n = n(2+3+4+...k) = n(k^2)$}
+\item 
+ \code{}
+ {
+ 	\Function{Merge}{$A[k][n],k,n$}
+ 
+  \If {$k==0$ }
+ 	    \State \Return $0$	
+  \For{$(i=1;i<=k;i+=2)$}
+     \State  $Merge2in1(A[i],A[i+1],A[i],n)$;
+  \EndFor
+    \State  $Merge(A[][],k/2,n*2)$;
+ \EndFunction
+ }
+\end{itemize}
+\end{A}
+\pagebreak
+\begin{Q}
+\textbf{[Fibonacci Numbers]}\\
+ Given below is a recursive algorithm for finding the $n_{th}$ fibonacci number
+ \code{}
+ {
+ 	\Function{fib}{n}
+ 	 	\If {$n==0$ or $n==1$}
+ 	 	\State \Return $1$
+		\Else \State \Return \Call{fib}{n-1} + \Call{fib}{n-2}
+ 	 	\EndIf
+ 	 	
+ 	\EndFunction
+ }
+ \begin{itemize}
+ 	\item Analyze the running time of this algorithm
+ 	\item A lot of computation seems to be repeated over and over in this algorithm. For example $fib(4)$ 	would compute $fib(3)$ and $fib(2)$ and then the called $fib(3)$ would also compute $fib(2)$. Is 	there a way we could avoid computing the same thing over and over again while still using a recursive approach?
+ \end{itemize}
+\end{Q}
+\text{$T(n) = T(n-1) + T(n-2) + O(1)$}\\
+\text{$T(n) = 2^n + 2^n + O(1)$}\\\\
+\text{$If we use bottom up approach we can save the extra work, as Fibonacci of numbers less than current n will be calculated only once$}\\
+
+
+\pagebreak
+
+\begin{Q}
+\textbf{[GCD]}\\
+ We studied the following recursive alogrithm for finding the gcd of two numbers $p$ and $q$ in discrete mathematics. 
+ \code{}
+ {
+ \Function {gcd}{p,q}
+    \If {$q == 0$}
+      \State \Return p
+    \Else
+      \State \Return \Call{gcd}{q, $p \mod q$}
+     \EndIf
+ \EndFunction
+ }
+ It turns out that the worst case input for this algorithm is $p=fib(n)$, $q=fib(n-1)$. Analyze the running time of the algorithm for this input.
+\end{Q}
+
+
+%\begin{Q}
+%\textbf{Inversion Table}\\
+%An inversion table $[b_1,b_2,...b_n]$ for an array $A$ is defined by letting $b_i$ be the number of elements greater than $i$ to the left of it in the array $A$. 
+%\end{Q}
+
+
+\begin{Q} 
+In each row of the following table, write whether $f = O(g)$, or $f=\Omega(g)$, or both i.e. $f=\Theta(g)$
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|c|}
+\hline \hspace{.2in}$f(n)$\hspace{.3in} & \hspace{.2in}$g(n)$\hspace{.3in} & \hskip1in Your Answer \hspace{1in} \\&& \\ \hline
+$100$ & $17$ & \\ [8pt]\hline
+$10^{200}$ & $n-10^{200}$ &\\[8pt]\hline
+$n^2\log 300$ & $ n\log n$ &\\[8pt]\hline
+$n^{100}$ & $2^n$ & \\[8pt]\hline
+$n\log n$ & $n-100$ &\\[8pt]\hline
+$\sqrt{n}$ & $\log n$ &\\[8pt]\hline
+$n^{1.01}$ & $n+100$ &\\[8pt]\hline
+$2\log n$ & $\log(n^2)$ &\\[8pt]\hline
+$\log(n^2)$ & $(\log n)^2$ &\\[8pt]\hline
+\end{tabular}
+\end{table}
+\end{Q}
+
+
+\begin{Q} 
+Order the following functions of $n$ from the smallest to largest complexity. If two have the same complexity put them in one line next to each other. 
+$$n\log n, \;\;\;\; (n-5)(n), \;\;\;\; 10\log 300, \;\;\;\;   n+7\log(n^2),$$ $$ 2^n, \;\;\;\; 10n^2+15n,\;\;\;\;   17,\;\;\;\;15n^3+n\log n,\;\;\;\;\frac{3n^8}{n^6}$$
+\end{Q}
+
+
+\begin{Q}
+\textbf{[Complexity Classes]}
+\begin{itemize}
+\item Order the following functions of $n$ from the smallest to largest complexity. If two have the same complexity put them in one line next to each other. 
+$$10^{200}, \;\;\;\; n^2\log 300, \;\;\;\; 2\log_{10} 10^{200}, \;\;\;\;   n^2+7\log(n^2),$$ $$ 3^{n^2}, \;\;\;\; n^2+\sqrt{n},\;\;\;\; n^2\log n  ,\;\;\;\;n^4+n^2+n^2\log n,\;\;\;\; n^4$$
+\item Briefly explain next to each line why these functions are in the same complexity class.
+
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.3pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\vskip0.07in
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.2pt}} 
+\end{itemize}
+\end{Q}
+
+\begin{Q} 
+\textbf{[Find Max and Min]}\\
+Show that $\frac{3n}{2} - 2$ comparisons are necessary in the worst case to find both the minimum and maximum of $A$. {\em Hint:} Count how many numbers are potentially either the maximum or minimum, and see how a comparison affects these counts. Note that at the end of the algorithm both these counts should be exactly $1$.
+\end{Q}
+
+\begin{Q}
+\textbf{Inversions}\\
+Suppose that you somehow know that the number of inversions in an array of size $N$ is $10$ where $10\ll N$. Which of the following sorting algorithms should you use to sort this array completely
+\begin{itemize}
+ \item Merge Sort
+ \item Selection Sort
+ \item Insertion Sort
+\end{itemize}  
+
+Give an appropriate reason for your choice.
+
+\end{Q}
+When little number of inversions the Insertion sort will perform in the memory operations better because of very few swaps.
+The merge and selection sort are independent of the number of inversions in an array as they don not consider the presented structure of array when memory operations are concerned, so, we will not see any improvement in later two sorts even if array is partially sorted
+\end{document}

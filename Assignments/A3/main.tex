@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{graphicx,fancyhdr,amsmath,amssymb,amsthm,subfig,url,hyperref}
+\usepackage{amssymb,setspace,graphicx,float,listings,amsfonts}
+\usepackage{algorithm}
+\usepackage[T1]{fontenc}
+\usepackage{enumerate}
+\usepackage{lmodern}
+\usepackage[noend]{algpseudocode}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\usepackage{enumerate}
+\theoremstyle{definition}
+\newtheorem{Q}{Problem}
+\newtheorem{A}{Answer}
+\newcommand{\code}[2]{\begin{algorithm}[H]\caption{: #1}\begin{algorithmic}#2\end{algorithmic}\end{algorithm}}
+%----------------------- Student and Homework Information --------------------------
+
+%%% PLEASE FILL THIS OUT WITH YOUR INFORMATION
+\newcommand{\myname}{Hassan Ali Khan}
+\newcommand{\myid}{15030044}
+\newcommand{\hwNo}{Problem Set 3}
+%%% END
+
+
+%--------------------- This is the title of the document. DO NOT CHANGE IT -----------------------
+
+
+
+\fancypagestyle{plain}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\sffamily\bfseries\large LUMS}
+\fancyhead[LO,RE]{\sffamily\bfseries\large CS-510 Design and Analysis of Algorithms}
+\fancyfoot[LO,RE]{\sffamily\bfseries\large \myname: \myid @lums.edu.pk}
+\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+%--------------------- This is the title of the document. DO NOT CHANGE IT ------------------------
+
+\title{CS-510 \hwNo}
+\author{\myname \qquad Student ID: \myid}
+
+%--------------------------------- AFTER Entering the Student and Homework Information, write your answers below  ----------------------------------
+
+\begin{document}
+\maketitle
+\begin{tabbing}
+
+
+{\bf CS-510 Algorithms}   \= \hskip1.4in \= Problem Set 3 \` {\bf Spring 2017} \kill 
+\end{tabbing}
+\begin{Q}
+Given a graph $G=(V,E)$, prove that for $s\in V$, $BFS(s)$ will visit only those vertices that are reachable from $s$. 
+\end{Q}
+\begin{A}
+In BFS 's' vertex is added in Q then the loop line of code is 
+while ( Q is not empty) - on every iteration \\head of Q, 'V', is dequeued and all such vertices 'U' where E(V,U) are added which are not visited yet are enqueued in Q and so on.This means every vertex by any path connected to 's' is visited and every vertex which is not connected to 's' by any possible path is not visited in BFS.
+\end{A}
+\pagebreak
+\begin{Q}
+Given a graph $G=(V,E)$. Let For $a,b\in V$, let $d(a,b)$ be the length of the shortest path between $a$ and $b$. Suppose we run $BFS(s)$ for $s\in V$. Prove that a vertex $x\in V$ is in level $i$ of the $BFS(s)$ tree if and only if $d(s,x)=i$.
+\end{Q}
+\begin{A}
+The BFS holds true for sub-path optimality theorem, as every neighbour of specific node of level '1' is inserted in queue at level '2', this can be extended to level 'i' vertex as well. Which proves that rove that a vertex x is in level 'i' of the BFS tree if and only if distance from source vertex to x is =i.
+\end{A}
+\pagebreak
+\begin{Q}
+Given an undirected graph $G$ on $n$ vertices, design an algorithm that determines whether $G$ is a tree.
+\end{Q}
+\begin{A}
+There definition of tree is an undirected fully connected graph with no cycles.\\
+  1) If an unexplored edge leads to a node that already exists in visited array, then the graph contains a cycle and in that case it is not a tree. \\
+2) Run BFS and after its execution check the size of visited array if it is not equal to number of vertices in graph then it can not be a tree.
+\end{A}
+\pagebreak
+\begin{Q}
+Given a connected, undirected graph $G$, design an algorithm that determines if $G$ is bipartite or not. Also figure out how many steps this algorithm would take
+\end{Q}
+\begin{A}
+We will need a mofified version of BFS to find bipartition, basic steps involved in algorithm are,\\
+1) Assign RED color to the source vertex (putting into set U).\\
+2) Color all the neighbors with BLUE color (putting into set V).\\
+3) Color all neighbor’s neighbor with RED color (putting into set U).\\
+4) This way, assign color to all vertices such that it satisfies all the constraints of m way coloring problem where m = 2.\\
+5) While assigning colors, if we find a neighbor which is colored with same color as current vertex, then the graph cannot be colored with 2 vertices (or graph is not Bipartite).\\
+
+\end{A}
+\pagebreak
+\begin{Q}
+Prove the following statement. You're given a graph $G=(V,E)$. Suppose the shortest path from $s\in V$ to $t\in V$ is $s,v_1,v_2,\ldots ,v_k,t$ , then the length of the shortest path from $s$ to $v_i$ must be exactly $i$.
+\end{Q}
+
+
+
+\end{document}
+
+
